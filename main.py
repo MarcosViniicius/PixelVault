@@ -1,9 +1,8 @@
 from reader import read_image
-from writer import create_image, write_image
+from writer import write_image
 from rich.panel import Panel
 from rich.table import Table
 from rich.console import Console
-from rich import print
 from helpers.multiline_helper import read_multiline
 
 console = Console()
@@ -56,12 +55,8 @@ def main():
                 console.input("\n[dim]Press Enter to return to the menu...[/dim]")
                 continue
 
-            create_image()
+            write_image(title, comment)
 
-            with console.status("[cyan]Writing images...[/cyan]"):
-                write_image(title, comment)
-
-            console.print("\n[bold green]Done![/bold green]")
             console.input("\n[dim]Press Enter to return to the menu...[/dim]")
             continue
 
