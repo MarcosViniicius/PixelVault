@@ -1,259 +1,185 @@
-# Image Text Writer
+# Image Steganography Tool
 
-A Python-based steganography tool that enables you to hide and retrieve text messages within PNG images using the LSB (Least Significant Bit) technique. This application provides a secure and invisible way to embed text data into images without perceptible quality loss.
+Hide text messages and files inside PNG images using LSB (Least Significant Bit) steganography. Data remains invisible to the human eye while being fully recoverable.
 
-## Overview
+## Features
 
-Image Text Writer is a command-line application that leverages steganography to conceal textual information within digital images. By modifying the least significant bits of pixel RGB values, it embeds data in a way that remains invisible to the human eye while maintaining the image's visual integrity.
+- 📝 **Hide text messages** with title and metadata
+- 📁 **Hide any file type** (documents, PDFs, archives, etc.)
+- 🖼️ **Multi-image support** - automatically splits large data
+- 🔄 **Dual extraction** - from images or Base64 backup file
+- 🎨 **Auto carrier images** - downloads random dog images as carriers
+- 📊 **Progress tracking** - visual feedback during operations
+- 💾 **Organized output** - folders numbered by type (text_N, archive_N)
 
-The tool automatically handles large text content by splitting it across multiple images, manages metadata for proper reconstruction, and provides an intuitive interface for both hiding and extracting hidden messages.
+## Quick Start
 
-## Key Features
-
-### Text Embedding
-- **Automatic Image Acquisition**: Downloads random dog images from an external API to serve as carrier images
-- **Multi-Image Support**: Automatically splits large text content across multiple images when needed
-- **Smart Capacity Calculation**: Estimates image capacity and determines the required number of images
-- **Metadata Management**: Stores title, part number, and total parts for accurate message reconstruction
-- **Organized Output**: Creates numbered folders with sequential image files for easy organization
-- **Real-Time Feedback**: Displays progress indicators during image generation
-- **Safety Margins**: Implements buffer zones to prevent data corruption during embedding
-
-### Text Extraction
-- **Intelligent Reconstruction**: Reads and combines multi-part messages in the correct sequence
-- **Data Validation**: Verifies integrity and reports missing or corrupted segments
-- **Folder-Based Organization**: Manages multiple hidden messages through organized folder structure
-- **Error Reporting**: Provides detailed diagnostics for troubleshooting issues
-- **Complete Message Display**: Shows extracted title and full reconstructed text
-
-### User Interface
-- **Rich Terminal Interface**: Colorful, intuitive console interface using the Rich library
-- **Interactive Menu System**: Clear navigation with visual feedback
-- **Progress Indicators**: Real-time status updates for long operations
-- **Multiline Input**: Custom text input with configurable termination marker
-- **Formatted Displays**: Panel layouts and tables for enhanced readability
-
-## How It Works
-
-The application uses **LSB (Least Significant Bit) steganography** to hide text within PNG images. This technique works by:
-
-1. Converting text to JSON format with metadata (title, part number, total parts)
-2. Encoding the JSON data as bytes
-3. Modifying the least significant bits of each RGB pixel value to store one bit of data
-4. Saving the modified image as PNG (lossless format preserves hidden data)
-
-The modifications are so subtle that they're imperceptible to human vision, making the hidden message effectively invisible while maintaining the image's visual quality.
-
-### Embedding Process
-1. User inputs title and text content
-2. System downloads a random dog image from an API
-3. Calculates the image's data capacity (with safety margin)
-4. Splits text into chunks if it exceeds single-image capacity
-5. Creates JSON payloads with metadata for each part
-6. Embeds data using LSB steganography
-7. Saves images in organized numbered folders
-
-### Extraction Process
-1. User selects a folder containing hidden message images
-2. System locates all numbered output images (`1_output.png`, `2_output.png`, etc.)
-3. Extracts hidden JSON data from each image
-4. Validates and sorts parts by sequence number
-5. Reconstructs and displays the complete original message
-
-## Requirements
-
-- Python 3.7 or higher
-- Internet connection (for downloading carrier images)
-
-### Dependencies
-- `rich` - Terminal formatting and UI components
-- `stegano` - LSB steganography implementation
-- `Pillow` (PIL) - Image processing
-- `requests` - HTTP requests for image downloads
-
-## Installation
-
-1. Clone or download this repository:
-```bash
-git clone <repository-url>
-cd metadados
-```
-
-2. Install required dependencies:
+### Installation
 ```bash
 pip install -r requirements.txt
-```
-
-## Usage
-
-Run the application:
-```bash
 python main.py
 ```
 
-### Main Menu Options
+### Requirements
+- Python 3.7+
+- Internet connection (for carrier images)
+- Dependencies: `rich`, `stegano`, `Pillow`, `requests`
 
-**Option 1: Read text from an existing image**
-- Select a folder from the output directory
-- The system will automatically detect and reconstruct hidden messages
-- Multi-part messages are reassembled in the correct order
+### Usage
 
-**Option 2: Create a new image and add text**
-- Enter a title for your hidden message
-- Paste or type your text content
-- Type `-- END --` on a new line to finish input
-- The system automatically generates the required images
+**Option 1: Read/Extract**
+- Choose folder (text_N or archive_N)
+- Select extraction method (images or Base64 file)
+- Data is reconstructed automatically
 
-**Press Enter: Exit the program**
+**Option 2: Hide Text**
+- Enter title and text content
+- Type `-- END --` to finish
+- Images generated automatically
+
+**Option 3: Hide File**
+- Place file in `./input/files/`
+- Select from menu
+- File split across images + Base64 backup saved
 
 ## Output Structure
 
-Generated images are stored in the `output` directory with the following structure:
-
 ```
 output/
-├── text_1/
+├── text_1/              # Hidden text messages
 │   ├── 1_output.png
-│   ├── 2_output.png
-│   └── ...
-├── text_2/
+│   └── 2_output.png
+├── archive_1/           # Hidden files
 │   ├── 1_output.png
-│   └── ...
-└── text_N/
-    └── 1_output.png
+│   ├── base64/
+│   │   └── payload.txt  # Base64 backup
+│   └── extracted_file.* # After extraction
+└── temp/                # Temporary files
 ```
 
-- Each folder (e.g., `text_1`, `text_2`) contains one complete hidden message
-- Images are numbered sequentially (`1_output.png`, `2_output.png`, etc.)
-- Multiple images in a folder represent different parts of the same message
+## How It Works
+
+**LSB Steganography**: Modifies the least significant bits of RGB pixels to store data. Changes are imperceptible but fully recoverable.
+
+**Capacity**: Each image holds ~70-280 KB depending on resolution.
+```
+Capacity = (Width × Height × 3) ÷ 8 × 0.75 safety factor
+```
+
+**Format**: Data stored as JSON with metadata (title/filename, part number, content).
+
+## ⚠️ CRITICAL: Sharing & Storage
+
+### 🚨 Data Loss Risk
+
+**Hidden data is FRAGILE and DESTROYED by:**
+- Image recompression or format conversion
+- Messaging apps (WhatsApp, Telegram, Discord, etc.)
+- Social media (Facebook, Instagram, Twitter, etc.)
+- Cloud storage direct upload (Google Photos, iCloud, etc.)
+- Email optimization, resizing, or JPEG conversion
+
+### ✅ SAFE Methods
+
+**1. Compress Before Sharing (RECOMMENDED)**
+```bash
+# Create encrypted archive
+7z a -tzip -p -mem=AES256 hidden.zip ./output/text_1/*.png
+```
+Send as **document/file** (NOT as image):
+- ✅ ZIP/RAR/7z archives
+- ✅ Email attachments
+- ✅ Cloud storage (as archive)
+- ✅ Messaging apps (as document)
+
+**2. Local Storage (SAFEST)**
+- ✅ Hard drive/SSD/USB drives
+- ✅ External storage
+- ✅ Network storage (NAS)
+
+**3. Verification**
+Always test extraction after transfer:
+- Extract data immediately
+- Compare file hashes (MD5/SHA-256)
+- Check file size hasn't changed
+
+### ❌ NEVER
+- Send raw PNG via messaging apps
+- Upload to social media
+- Convert to JPEG/WebP
+- Edit images after hiding data
+- Trust platforms without testing
+
+### 💡 Recommended Workflow
+```
+1. Hide data → 2. Test locally → 3. Create ZIP archive → 
+4. Send as document → 5. Recipient extracts → 6. Recipient recovers data
+```
 
 ## Technical Details
 
-### Capacity Calculation
-The system calculates image capacity using the formula:
-```
-Capacity (bytes) = (Width × Height × 3 RGB channels ÷ 8 bits) × Safety Factor
-```
-
-Default safety factor: 0.75 (75% of theoretical capacity to ensure reliability)
-
-### Text Splitting Algorithm
-- Respects UTF-8 character boundaries
-- Ensures no character is split across images
-- Calculates byte size per character for accurate splitting
-- Maintains encoding integrity throughout the process
-
-### Data Format
-Hidden data is stored as JSON:
+**Data Format:**
 ```json
-{
-  "title": "Message Title",
-  "part": 1,
-  "total": 3,
-  "text": "Portion of the hidden text..."
-}
+// Text
+{"title": "...", "part": 1, "total": 3, "text": "..."}
+
+// File
+{"filename": "...", "part": 1, "total": 5, "data": "base64..."}
 ```
 
-### Image Processing
-- Converts all images to RGB color mode for consistency
-- Uses PNG format (lossless compression preserves hidden data)
-- Downloads carrier images from Dog API (https://dog.ceo/dog-api/)
-- Implements error handling for network and file operations
+**Image Processing:**
+- PNG format only (lossless)
+- RGB color mode
+- Dog CEO API for carrier images
+- UTF-8 character boundary respect
 
-## Use Cases
+## Troubleshooting
 
-- **Secure Communication**: Hide sensitive messages in plain sight
-- **Digital Watermarking**: Embed metadata or ownership information
-- **Privacy Protection**: Conceal personal information in images
-- **Educational Purposes**: Demonstrate steganography concepts
-- **Creative Projects**: Create puzzles or treasure hunts with hidden clues
-- **Data Archival**: Store text backups in image format
-
-## Security Considerations
-
-- LSB steganography is detectable by steganalysis tools
-- Not suitable for highly sensitive or classified information
-- Images should be transmitted via lossless channels (lossy compression destroys hidden data)
-- Consider encrypting text before embedding for additional security
-- Avoid using the same carrier image multiple times
-
-## Limitations
-
-- Only works with PNG images (lossless format required)
-- Hidden data is lost if image is converted to lossy formats (JPEG, WebP with lossy compression)
-- Large text requires multiple images
-- Requires internet connection to download carrier images
-- Detection possible with statistical analysis tools
+| Issue | Solution |
+|-------|----------|
+| No hidden data found | Image was recompressed or modified |
+| Network error | Check internet, Dog API may be down |
+| File extraction fails | Missing parts or try Base64 extraction |
+| Data loss after sharing | ❌ Cannot recover - use ZIP archives next time |
+| Folder not found | Create `input/files/` manually |
 
 ## Project Structure
 
 ```
 metadados/
-├── config.py                # Configuration constants and settings
-├── main.py                  # Main application entry point and menu system
-├── reader.py                # Image reading and text extraction logic
-├── writer.py                # Image creation and text embedding logic
-├── requirements.txt         # Python dependencies
-├── helpers/
-│   ├── __init__.py          # Package initializer
-│   ├── multiline_helper.py  # Multi-line text input handler
-│   ├── image_helper.py      # Image download and capacity calculations
-│   ├── text_helper.py       # Text splitting and overhead calculations
-│   └── file_helper.py       # File and folder operations
-└── output/                  # Generated images with hidden messages
+├── main.py              # Menu & navigation
+├── writer.py            # Hide text/files
+├── reader.py            # Extract text/files
+├── config.py            # Settings
+├── helpers/             # Utilities
+│   ├── image_helper.py
+│   ├── text_helper.py
+│   ├── file_helper.py
+│   ├── byte_converter_helper.py
+│   └── multiline_helper.py
+├── input/files/         # Files to hide
+└── output/              # Generated images
 ```
 
-### Module Responsibilities
+## Limitations
 
-- **config.py**: Centralizes all configuration constants (paths, API URLs, safety factors, patterns)
-- **main.py**: Handles user interface and menu navigation
-- **reader.py**: Extracts and reconstructs hidden messages from images
-- **writer.py**: Embeds text into images using steganography
-- **helpers/**: Shared utility functions organized by domain:
-  - `image_helper.py`: Image download and capacity calculations
-  - `text_helper.py`: Text manipulation and splitting algorithms
-  - `file_helper.py`: File system operations and pattern matching
-  - `multiline_helper.py`: Multi-line text input handling
+- PNG only (lossy formats destroy data)
+- Detectable by steganalysis tools
+- Requires internet for carrier images
+- Not for highly sensitive data (add encryption separately)
 
-## Troubleshooting
+## Use Cases
 
-**No hidden data found**
-- Ensure you're reading images created by this tool
-- Verify the image hasn't been compressed or modified
-
-**Network errors**
-- Check your internet connection
-- The Dog API might be temporarily unavailable
-
-**Text too large error**
-- The system will automatically split text across multiple images
-- If issues persist, try breaking text into smaller messages
-
-**Folder not found**
-- The `output` directory is created automatically on first use
-- Ensure you have write permissions in the application directory
+Secure communication • File concealment • Document backup • Digital watermarking • Privacy protection • Educational demos • Creative puzzles • Data archival
 
 ## Contributing
 
-Contributions are welcome! Areas for improvement:
-- Support for additional image formats
-- Custom carrier image selection
-- Encryption integration
-- GUI interface
-- Compression before embedding
-- Password protection for hidden messages
+Welcome contributions: encryption integration, GUI, custom images, batch processing, additional formats, password protection.
 
-## License
+## License & Credits
 
-This project is provided as-is for educational and personal use.
-
-## Acknowledgments
-
-- Built with [Stegano](https://github.com/cedricbonhomme/Stegano) library
-- UI powered by [Rich](https://github.com/Textualize/rich)
-- Image processing via [Pillow](https://python-pillow.org/)
-- Carrier images from [Dog CEO API](https://dog.ceo/dog-api/)
+Educational and personal use. Built with [Stegano](https://github.com/cedricbonhomme/Stegano), [Rich](https://github.com/Textualize/rich), [Pillow](https://python-pillow.org/), [Dog CEO API](https://dog.ceo/dog-api/).
 
 ---
 
-**Note**: This tool is designed for educational purposes and legitimate use cases. Users are responsible for ensuring their use complies with applicable laws and regulations.
+⚠️ **For educational purposes. Users responsible for legal compliance.**
