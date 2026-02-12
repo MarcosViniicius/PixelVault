@@ -189,14 +189,31 @@ Hidden data is stored as JSON:
 
 ```
 metadados/
+├── config.py                # Configuration constants and settings
 ├── main.py                  # Main application entry point and menu system
 ├── reader.py                # Image reading and text extraction logic
 ├── writer.py                # Image creation and text embedding logic
 ├── requirements.txt         # Python dependencies
 ├── helpers/
-│   └── multiline_helper.py  # Multi-line text input handler
+│   ├── __init__.py          # Package initializer
+│   ├── multiline_helper.py  # Multi-line text input handler
+│   ├── image_helper.py      # Image download and capacity calculations
+│   ├── text_helper.py       # Text splitting and overhead calculations
+│   └── file_helper.py       # File and folder operations
 └── output/                  # Generated images with hidden messages
 ```
+
+### Module Responsibilities
+
+- **config.py**: Centralizes all configuration constants (paths, API URLs, safety factors, patterns)
+- **main.py**: Handles user interface and menu navigation
+- **reader.py**: Extracts and reconstructs hidden messages from images
+- **writer.py**: Embeds text into images using steganography
+- **helpers/**: Shared utility functions organized by domain:
+  - `image_helper.py`: Image download and capacity calculations
+  - `text_helper.py`: Text manipulation and splitting algorithms
+  - `file_helper.py`: File system operations and pattern matching
+  - `multiline_helper.py`: Multi-line text input handling
 
 ## Troubleshooting
 
