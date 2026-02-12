@@ -3,8 +3,10 @@ Configuration constants for the Image Text Writer project.
 """
 
 # Directories
+OUTPUT_TEMP_FILES = "./output/temp/"
 OUTPUT_DIR = "./output"
-TEMP_IMAGE = "image.png"
+INPUT_FILES_DIR = "./input/files"
+TEMP_IMAGE = "./output/temp/image.png"
 
 # API
 DOG_API_URL = "https://dog.ceo/api/breeds/image/random"
@@ -17,4 +19,5 @@ OVERHEAD_BASE = 512
 # File patterns
 FILE_PATTERN = r"^(\d+)_output\.png$"
 FOLDER_PREFIX = "text_"
+FOLDER_ARCHIVES_PREFIX = "archive_"
 OUTPUT_SUFFIX = "_output.png"

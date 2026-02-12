@@ -1,9 +1,10 @@
 from reader import read_image
-from writer import write_image
+from writer import write_image, hide_archive_in_image
 from rich.panel import Panel
 from rich.table import Table
 from rich.console import Console
 from helpers.multiline_helper import read_multiline
+
 
 console = Console()
 
@@ -11,16 +12,17 @@ def show_header():
     console.clear()
     console.print(
         Panel.fit(
-            "[bold cyan]Image Text Writer[/bold cyan]\n"
-            "[dim]Read text from images or create new ones with custom metadata.[/dim]",
+            "[bold cyan]Image Steganography Tool[/bold cyan]\n"
+            "[dim]Hide and extract text or files within images using LSB steganography.[/dim]",
             border_style="cyan"
         )
     )
 
 def show_menu():
     table = Table(show_header=False, box=None, pad_edge=False)
-    table.add_row("[bold green]1[/bold green]", "Read text from an existing image")
-    table.add_row("[bold green]2[/bold green]", "Create a new image and add text")
+    table.add_row("[bold green]1[/bold green]", "Read text from images or extract hidden files")
+    table.add_row("[bold green]2[/bold green]", "Create new images with hidden text")
+    table.add_row("[bold green]3[/bold green]", "Hide a file inside images (supports large files)")
     table.add_row("[bold red]Enter[/bold red]", "Exit")
     console.print("\n[bold]Choose an option:[/bold]\n")
     console.print(table)
@@ -37,7 +39,7 @@ def main():
             break
 
         if option == "1":
-            console.print("\n[green]Reading image...[/green]")
+            console.print("\n[green]Reading images...[/green]")
             read_image()
             console.input("\n[dim]Press Enter to return to the menu...[/dim]")
             continue
@@ -57,6 +59,11 @@ def main():
 
             write_image(title, comment)
 
+            console.input("\n[dim]Press Enter to return to the menu...[/dim]")
+            continue
+        if option == "3":
+            console.print("\n[cyan]Hiding file in images...[/cyan]")
+            hide_archive_in_image()
             console.input("\n[dim]Press Enter to return to the menu...[/dim]")
             continue
 
