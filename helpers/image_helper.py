@@ -1,6 +1,5 @@
-"""
-Helper functions for image operations.
-"""
+# imagem_Helper - functions for image operations.
+
 from PIL import Image
 from io import BytesIO
 import requests
@@ -8,15 +7,8 @@ import config
 
 
 def download_random_dog_image(output_path=config.TEMP_IMAGE):
-    """
-    Downloads a random dog image from the Dog API and saves it as PNG.
-    
-    Args:
-        output_path: Path where the image will be saved
-        
-    Returns:
-        bool: True if successful, False otherwise
-    """
+   # Downloads a random dog image from the API, saves it as PNG, and returns success status.
+
     try:
         # Get random dog image URL
         response = requests.get(config.DOG_API_URL, timeout=config.API_TIMEOUT)
@@ -42,16 +34,8 @@ def download_random_dog_image(output_path=config.TEMP_IMAGE):
 
 
 def calculate_capacity(image_path, safety_factor=config.SAFETY_FACTOR):
-    """
-    Calculates the approximate capacity in bytes for LSB 1-bit/channel (RGB) steganography.
-    
-    Args:
-        image_path: Path to the image file
-        safety_factor: Safety margin (0.0 to 1.0) to prevent data loss
-        
-    Returns:
-        int: Usable capacity in bytes
-    """
+    # Calculates usable byte capacity for LSB 1-bit/channel RGB steganography with a safety margin.
+
     try:
         with Image.open(image_path) as img:
             width, height = img.size

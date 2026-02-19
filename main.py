@@ -1,3 +1,5 @@
+# main.py - Main entry point for the Image Steganography Tool.
+
 from reader import read_image
 from writer import write_image, hide_archive_in_image
 from rich.panel import Panel

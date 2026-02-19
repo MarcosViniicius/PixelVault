@@ -1,3 +1,4 @@
+# writer.py - Functions to hide text and files inside PNG images using LSB steganography.
 import os
 import json
 from stegano import lsb
@@ -16,10 +17,7 @@ console = Console()
 
 
 def hide_archive_in_image():
-    """
-    Hides a file inside PNG images using Base64 encoding and LSB steganography.
-    Supports large files by splitting across multiple images.
-    """
+    # Embeds files into PNG images using Base64 and LSB steganography, supporting multi-image splits.
     console.print(
         Panel.fit(
             "[bold cyan]Hide File in Image (Base64)[/bold cyan]\n"
@@ -169,13 +167,8 @@ def hide_archive_in_image():
     )
 
 def write_image(title: str, comment: str):
-    """
-    Hides text within PNG images using LSB steganography.
+    # Hides text in PNG images via LSB steganography using the given title and content.
     
-    Args:
-        title: Title of the hidden message
-        comment: Text content to hide
-    """
     if comment.strip() == "":
         console.print("[bold red]No text entered.[/bold red]")
         return

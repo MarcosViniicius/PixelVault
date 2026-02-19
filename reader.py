@@ -1,3 +1,4 @@
+# reader.py - Functions to read and extract hidden text and files from PNG images using LSB steganography.
 import os
 import json
 from stegano import lsb
@@ -13,10 +14,8 @@ console = Console()
 
 
 def extract_file_from_archive(folder_path: str):
-    """
-    Extracts a hidden file from archive folder images.
-    Supports files split across multiple images.
-    """
+    # Extracts a hidden file from archive images, supporting multi-image splits.
+
     # Check if base64 text file exists
     base64_folder = os.path.join(folder_path, "base64")
     base64_txt_path = os.path.join(base64_folder, "payload.txt")
@@ -164,9 +163,8 @@ def extract_file_from_archive(folder_path: str):
 
 
 def read_image():
-    """
-    Reads and reconstructs hidden text from PNG images using LSB steganography.
-    """
+    # Reads and reconstructs hidden text from PNG images using LSB steganography.
+
     console.print(
         Panel.fit(
             "[bold cyan]Image Reader (Steganography)[/bold cyan]\n"

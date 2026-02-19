@@ -1,6 +1,4 @@
-"""
-Configuration constants for the Image Text Writer project.
-"""
+#config.py - Configuration constants for the Image Text Writer project.
 
 # Directories
 OUTPUT_TEMP_FILES = "./output/temp/"

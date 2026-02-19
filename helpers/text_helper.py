@@ -1,20 +1,9 @@
-"""
-Helper functions for text manipulation.
-"""
+# text-helper.py - Helper functions for text manipulation.
 import config
 
 
 def split_text_by_bytes(text, max_bytes):
-    """
-    Splits text into chunks ensuring each part is <= max_bytes in UTF-8 encoding.
-    
-    Args:
-        text: Text string to split
-        max_bytes: Maximum bytes per chunk
-        
-    Returns:
-        list: List of text chunks
-    """
+    # Splits text into UTF-8 chunks not exceeding max_bytes and returns the list of parts.
     if max_bytes <= 0:
         return []
 
@@ -42,13 +31,5 @@ def split_text_by_bytes(text, max_bytes):
 
 
 def calculate_overhead(title):
-    """
-    Calculates the overhead bytes needed for JSON metadata.
-    
-    Args:
-        title: Title string
-        
-    Returns:
-        int: Estimated overhead in bytes
-    """
+    # Estimates JSON metadata overhead in bytes based on the provided title.
     return config.OVERHEAD_BASE + len(title.encode("utf-8"))

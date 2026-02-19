@@ -1,21 +1,12 @@
-"""
-Helper functions for file and folder operations.
-"""
+# file_helper.py - Helper functions for file and folder operations.
+    
 import os
 import re
 import config
 
 
 def list_folders(base_path):
-    """
-    Lists all subdirectories in the given path.
-    
-    Args:
-        base_path: Path to search for folders
-        
-    Returns:
-        list: Sorted list of folder names
-    """
+    # Lists subdirectories in the given path and returns a sorted list of folder names.
     if not os.path.isdir(base_path):
         return []
     
@@ -27,16 +18,8 @@ def list_folders(base_path):
 
 
 def get_next_folder_index(base_path, prefix=config.FOLDER_PREFIX):
-    """
-    Finds the next available folder index (e.g., text_1, text_2, text_3...).
-    
-    Args:
-        base_path: Base directory path
-        prefix: Folder name prefix
-        
-    Returns:
-        int: Next available index
-    """
+    # Returns the next available folder index based on the given base path and prefix.
+
     index = 1
     while os.path.isdir(os.path.join(base_path, f"{prefix}{index}")):
         index += 1
@@ -44,16 +27,7 @@ def get_next_folder_index(base_path, prefix=config.FOLDER_PREFIX):
 
 
 def find_numbered_images(folder_path, pattern=config.FILE_PATTERN):
-    """
-    Finds all numbered output images in a folder (e.g., 1_output.png, 2_output.png).
-    
-    Args:
-        folder_path: Path to the folder containing images
-        pattern: Regex pattern to match filenames
-        
-    Returns:
-        list: Sorted list of tuples (number, filename)
-    """
+    # Finds numbered output images in a folder and returns a sorted list of (number, filename).
     if not os.path.isdir(folder_path):
         return []
     

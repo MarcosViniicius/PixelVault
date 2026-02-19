@@ -1,3 +1,5 @@
+# byte_converter_helper.py - Helper functions to convert files to Base64 and restore them back.
+
 import base64
 import json
 from pathlib import Path
@@ -21,7 +23,7 @@ def file_to_base64(input_path: str, output_txt: str):
     print("File converted to Base64 with extension saved.")
 
 
-# # Restore file from Base64
+# Restore file from Base64
 # base64_to_file("payload.txt", "arquivo_restaurado")
 
 def base64_to_file(input_txt: str, output_name: str):

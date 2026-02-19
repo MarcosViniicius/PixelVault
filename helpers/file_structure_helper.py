@@ -1,6 +1,7 @@
+# file_structure_helper.py - Helper functions to manage file and directory structure for the Image Steganography Tool.
+
 import os
 import config
-from rich.console import Console
 
 OUTPUT_DIR = config.OUTPUT_DIR
 OUTPUT_TEMP_FILES = config.OUTPUT_TEMP_FILES
