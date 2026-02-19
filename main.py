@@ -4,6 +4,7 @@ from rich.panel import Panel
 from rich.table import Table
 from rich.console import Console
 from helpers.multiline_helper import read_multiline
+from helpers.file_structure_helper import create_directory_structure
 
 
 console = Console()
@@ -28,6 +29,7 @@ def show_menu():
     console.print(table)
 
 def main():
+    create_directory_structure()
     while True:
         show_header()
         show_menu()

@@ -15,6 +15,10 @@ output/
 *.png
 image.png
 
+# Input files
+input/
+input/files
+
 # IDE
 .vscode/
 .idea/
